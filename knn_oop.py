@@ -46,6 +46,11 @@ class KNN():
             self.drawPoint(point,False)
         for unKnow in self.unKnows:
             self.drawPoint(unKnow,True)
+        plt.rcParams['font.sans-serif'] = ['SimHei'] 
+        plt.rcParams['axes.unicode_minus'] = False 
+        plt.title('KNN模式识别')
+        plt.xlabel('x')
+        plt.ylabel('y')
         plt.show()
         
     def drawPoint(self,point,flag):
@@ -55,6 +60,9 @@ class KNN():
             plt.scatter(x,y,color='y',marker='s')
         else:
             plt.scatter(x,y,color='b',marker='^')
+        if flag:
+            plt.annotate(r'$({},{})$'.format(x,y),xy=(x,y),xytext=(+20,-20),textcoords='offset points',fontsize=12,
+             arrowprops=dict(arrowstyle='->',connectionstyle='arc3,rad=.2'))
 
 
 if __name__=='__main__':
@@ -62,7 +70,7 @@ if __name__=='__main__':
         [4.6, 3.4], [5. , 3.4 ], [4.4, 2.9], [4.9, 3.1]]
     x1=[ [6.1, 3. ],  [5.8, 2.6], [5. , 2.3], [5.6, 2.7],
         [5.7, 3. ],  [5.7, 2.9],  [6.2, 2.9], [5.1, 2.5],  [5.7, 2.8]]
-    x.extend(x)
+    x.extend(x1)
     y=[ -1, -1, -1, -1, -1, -1, -1, -1, -1]
     y1=[ 1, 1, 1, 1, 1, 1, 1, 1, 1]
     y.extend(y1)

@@ -26,13 +26,13 @@ class KNN():
             self.unKnows.append(self.Point(X[i],0))
 
     def inference(self):                                #根据已知样本点识别未知样本点类别并显示结果
-        for unKnow in self.unKnows:
+        for unKnow in self.unKnows:                     #计算未知样本与所有已知样本的距离
             for point in self.points:
-                point.getDistance(unKnow)
+                point.getDistance(unKnow)               
             
-            self.points.sort(key=lambda o:o.distance)
-            result=[self.points[i].sampleClass/self.points[i].distance for i in range(self.voteNum)]
-            result=sum(result)
+            self.points.sort(key=lambda o:o.distance)    #将样本按距离从小到大排列
+            result=[self.points[i].sampleClass/self.points[i].distance for i in range(self.voteNum)]       #对新样本进行投票表决
+            result=sum(result)                          
             if result>0:
                 unKnow.sampleClass=1
             else:
@@ -75,6 +75,6 @@ if __name__=='__main__':
     y1=[ 1, 1, 1, 1, 1, 1, 1, 1, 1]
     y.extend(y1)
     knn=KNN(x,y)                                                            #使用KNN类进行模式识别
-    knn.readUnKnow([[5.1,3.5],[5.5,2.6]],3)
+    knn.readUnKnow([[5.1,3.5],[5.5,2.6],[5.,5.]],3)
     knn.inference()
 

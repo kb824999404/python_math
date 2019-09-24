@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class KNN():
-    class Point():
-        def __init__(self,coordinate,sampleClass):
+    class Point():                                                                  #定义点类，便于保存样本点坐标、类别和计算距离
+        def __init__(self,coordinate,sampleClass):                              
             self.coordinate=coordinate
             self.sampleClass=sampleClass
         
@@ -13,19 +13,19 @@ class KNN():
             result=np.sqrt(sum(temp))
             self.distance=result
 
-    def __init__(self,X,Y):
+    def __init__(self,X,Y):                                         #用Point类保存已知样本点
         self.points=[]
         self.sampleNum=len(X)
         for i in range(self.sampleNum):
             self.points.append(self.Point(X[i],Y[i]))
         
-    def readUnKnow(self,X,k):
+    def readUnKnow(self,X,k):                           #保存未知样本点和投票样本数
         self.unKnows=[]
         self.voteNum=k
         for i in range(len(X)):
             self.unKnows.append(self.Point(X[i],0))
 
-    def inference(self):
+    def inference(self):                                #根据已知样本点识别未知样本点类别并显示结果
         for unKnow in self.unKnows:
             for point in self.points:
                 point.getDistance(unKnow)
@@ -40,11 +40,11 @@ class KNN():
         self.showResult()
 
     def showResult(self):
-        for unKnow in self.unKnows:
+        for unKnow in self.unKnows:                             #输出未知样本点类别
             print(unKnow.coordinate,':',unKnow.sampleClass)
-        for point in self.points:
+        for point in self.points:                               #画出已知样本点
             self.drawPoint(point,False)
-        for unKnow in self.unKnows:
+        for unKnow in self.unKnows:                             #画出未知样本点
             self.drawPoint(unKnow,True)
         plt.rcParams['font.sans-serif'] = ['SimHei'] 
         plt.rcParams['axes.unicode_minus'] = False 
@@ -53,7 +53,7 @@ class KNN():
         plt.ylabel('y')
         plt.show()
         
-    def drawPoint(self,point,flag):
+    def drawPoint(self,point,flag):                            #画点，如果为未知样本点，则标注其坐标
         x=point.coordinate[0]
         y=point.coordinate[1]
         if point.sampleClass==1:
@@ -66,7 +66,7 @@ class KNN():
 
 
 if __name__=='__main__':
-    x=[ [4.9, 3. ],  [4.7, 3.2], [4.6, 3.1], [5. , 3.6], [5.4, 3.9],
+    x=[ [4.9, 3. ],  [4.7, 3.2], [4.6, 3.1], [5. , 3.6], [5.4, 3.9],            #准备数据
         [4.6, 3.4], [5. , 3.4 ], [4.4, 2.9], [4.9, 3.1]]
     x1=[ [6.1, 3. ],  [5.8, 2.6], [5. , 2.3], [5.6, 2.7],
         [5.7, 3. ],  [5.7, 2.9],  [6.2, 2.9], [5.1, 2.5],  [5.7, 2.8]]
@@ -74,7 +74,7 @@ if __name__=='__main__':
     y=[ -1, -1, -1, -1, -1, -1, -1, -1, -1]
     y1=[ 1, 1, 1, 1, 1, 1, 1, 1, 1]
     y.extend(y1)
-    knn=KNN(x,y)
+    knn=KNN(x,y)                                                            #使用KNN类进行模式识别
     knn.readUnKnow([[5.1,3.5],[5.5,2.6]],3)
     knn.inference()
 

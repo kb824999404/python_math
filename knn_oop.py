@@ -41,11 +41,12 @@ class KNN():
 
     def showResult(self):
         for unKnow in self.unKnows:
-            print(unKnow.coordinate+':'+unKnow.sampleClass)
+            print(unKnow.coordinate,':',unKnow.sampleClass)
         for point in self.points:
-            drawPoint(point,False)
+            self.drawPoint(point,False)
         for unKnow in self.unKnows:
-            drawPoint(unKnow,True)
+            self.drawPoint(unKnow,True)
+        plt.show()
         
     def drawPoint(self,point,flag):
         x=point.coordinate[0]
@@ -54,6 +55,7 @@ class KNN():
             plt.scatter(x,y,color='y',marker='s')
         else:
             plt.scatter(x,y,color='b',marker='^')
+
 
 if __name__=='__main__':
     x=[ [4.9, 3. ],  [4.7, 3.2], [4.6, 3.1], [5. , 3.6], [5.4, 3.9],

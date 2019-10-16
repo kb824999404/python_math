@@ -49,8 +49,8 @@ class KNN():
         plt.rcParams['font.sans-serif'] = ['SimHei'] 
         plt.rcParams['axes.unicode_minus'] = False 
         plt.title('KNN模式识别')
-        plt.xlabel('x')
-        plt.ylabel('y')
+        plt.xlabel('x1')
+        plt.ylabel('x2')
         plt.show()
         
     def drawPoint(self,point,flag):                            #画点，如果为未知样本点，则标注其坐标
@@ -125,8 +125,8 @@ class PLA:
         plt.rcParams['font.sans-serif'] = ['SimHei'] 
         plt.rcParams['axes.unicode_minus'] = False 
         plt.title('感知器算法')
-        plt.xlabel('x')
-        plt.ylabel('y')
+        plt.xlabel('x1')
+        plt.ylabel('x2')
         plt.show()
 
 

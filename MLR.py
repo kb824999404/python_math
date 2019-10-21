@@ -1,65 +1,57 @@
-import matplotlib.pyplot as plt 
 import numpy as np
 from scipy.stats import f  
 
-
 class MLR:
-    def __init__(self, X,Y):
-        one=np.ones(len(X))
+    def __init__(self,X,Y):
+        one=np.ones(X.shape[0])       #将原来的X加上全为1的一列
         self.X=np.c_[one,X]
         self.Y=Y
-    def fit(self):
+    def modelling(self):          #根据公式求解回归系数
         XT=self.X.T
-        tmp=np.dot(XT,self.X)
-        inv=np.linalg.inv(tmp)
-        tmp=np.dot(inv,XT)
+        XTX=np.dot(XT,self.X)
+        XTXinv=np.linalg.inv(XTX)
+        tmp=np.dot(XTXinv,XT)
         self.A=np.dot(tmp,self.Y)
-    def getCoef(self):
+        print(self.A.shape)
+    def getCoef(self):      
         return self.A
-    def predict(self,XNew):
+    def showCoef(self):
+        A=self.A
+        size=A.shape
+        for i in range(size[0]):
+            for j in range(size[1]):
+                print(A[i][j],'\t',end="")
+            print()
+    def predict(self,XNew):     #用求得的模型预测未知样本
         one=np.ones(len(XNew))
         X=np.c_[one,XNew]
         return X.dot(self.A)
-    def showResult(self):
-        a=self.A
-        x=self.X[:,1]
-        y=self.Y
-        print("model is {:10.3f}+{:10.3f}x".format(a[0],a[1]))        #输出直线
-        xvalue=[x[i] for i in range(len(x))]
-        xmin=min(xvalue)                            
-        xmax=max(xvalue)
-        xp=[xmin,xmax]
-        yp=[a[1]*xmin+a[0],a[1]*xmax+a[0]]
-        plt.plot(x,y,'bo')                  #画出样本点  按两种类型分两种颜色
-        plt.plot(xp,yp)                             #画出直线
-        plt.rcParams['font.sans-serif'] = ['SimHei'] 
-        plt.rcParams['axes.unicode_minus'] = False 
-        plt.title('一元线性回归')
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.show()
     def Ftest(self,alpha):  # 给定置信度alpha
-        x=self.X[:,1]
-        n=len(x)   # 获取样本数
-        f_arfa=f.isf(alpha, 1, n-2)   # f临界值
-        Yaver=self.Y.mean()   # y平均值
-        Yhat=self.predict(x)  #预测y
-        U=((Yhat-Yaver)**2).sum()  #U值
-        Qe=((self.Y-Yhat)**2).sum()  #Qe值
-        F=U/(Qe/(n-2))   # f值
-        answer=[F,f_arfa,F>f_arfa]  # 返回F、f临界、F>临界
-        return answer
-    
+        x=self.X[:,1:]
+        n=x.shape[0]  # 获取样本数
+        Y=self.Y.T
+        Yhat=self.predict(x).T  #预测y
+        answers=[]
+        for j in range(len(Y)):             #依次验证每个方程的显著性
+            F,f_arfa=[],[]
+            Yaver=np.mean(Y[j])  # y平均值
+            U=((Yhat[j]-Yaver)**2).sum()  #U值
+            Qe=((Y[j]-Yhat[j])**2).sum()  #Qe值
+            for i in range(x.shape[1]):     #依次检验方程中的每个系数
+                k=i+1
+                f_arfa.append(f.isf(alpha, k, n-k-1))  # f临界值
+                F.append((U/k)/(Qe/(n-k-1)))        # f值
+            answer=[[(F[i]>f_arfa[i]) for i in range(len(F))]]  # 返回F、f临界、F>临界
+            answers.append(answer)
+        return answers
 
 if __name__=='__main__':
-    data=np.loadtxt(r'2.txt')
-    X=data[0]
-    Y=data[1]
+    data=np.loadtxt('mlr_test_data.txt')
+    X=data[:,:4]
+    Y=data[:,4:]
+    print(X.shape)
+    print(Y.shape)
     mlr=MLR(X,Y)
-    mlr.fit()
+    mlr.modelling()
+    mlr.showCoef()
     print(mlr.Ftest(0.01))
-    mlr.showResult()
-    # print(X)
-    # print(Y)
-    # print(mlr.getCoef())
-    # print(mlr.predict(X))

@@ -19,7 +19,7 @@ def generateData():
 
 if __name__=='__main__':
     X_train,X_test,Y_train,Y_test=generateData()
-    clf=MLPClassifier(activation='logistic',hidden_layer_sizes=(100,),alpha=1e-5,random_state=1,max_iter=1000)
+    clf=MLPClassifier(activation='relu',hidden_layer_sizes=(128,64,32,),alpha=1e-5,random_state=1,max_iter=1000)
     clf.fit(X_train,Y_train)
     score=clf.score(X_test,Y_test)
     print('score=',score)

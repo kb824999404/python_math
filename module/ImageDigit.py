@@ -103,6 +103,11 @@ class ImageDigit:
                 yStart = (32 - yLength) // 2  # 居中
                 bg = Image.new('RGB', (32, 32), 'white')
                 bg.paste(t, (xStart, yStart))  # 将一张图粘贴到另一张图像上
+
+                import os
+                if not os.path.exists(path): # 存储分割后小图像位置
+                    os.makedirs(path)
+
                 bg.save(path+"\\" + str((ii+1)%10) + "_" + str(jj) + "_32_32.bmp")
                 oneDigit.append(bg)
             digits32_32.append(oneDigit)

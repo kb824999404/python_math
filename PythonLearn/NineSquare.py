@@ -16,8 +16,8 @@ while i<100000:
     p1=R.randint(0,8)
     p2=R.randint(0,8)
     A=B[:]
-    A[p1],A[p2]=A[p2],A[p1]
-    a_eva=eva(A)
+    A[p1],A[p2]=A[p2],A[p1]     #随机交换两个数
+    a_eva=eva(A)                #评估
     if(a_eva<b_eva):
         b_eva=a_eva
         B=A

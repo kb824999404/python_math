@@ -42,7 +42,7 @@ def extractFeatureWords():              #提取特征词，生成词典
     
 if __name__=='__main__':
     featureWords=['赞','差','太差','帅','起球','不好','货真价实','上当']  
-    file=open('../data/comment.txt','r',encoding='utf-8')
+    file=open('data/comment.txt','r',encoding='utf-8')
     lines=file.readlines()
     debate=[]
     ans=np.zeros((len(lines),1))

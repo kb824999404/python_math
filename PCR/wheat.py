@@ -16,8 +16,9 @@ if __name__=='__main__':
     cls2=B!=1.0
     plt.subplot(1,2,1)
     plt.title("PCA")
-    plt.plot(T[cls1,0],T[cls1,1],'ro')   #取T的前2列制图
-    plt.plot(T[cls2,0],T[cls2,1],'b^')
+    plt.plot(T[cls1,0],T[cls1,1],'ro')   #取T的前2列制图    散度最大方向的超平面
+    plt.plot(T[cls2,0],T[cls2,1],'b^')   #原理：模式可分的问题，类间差异大于类内差异
+
 
 
 

@@ -15,9 +15,12 @@ def generateData():
 if __name__=='__main__':
     X_train,X_test,Y_train,Y_test=generateData()
 
-    clf=MLPRegressor(hidden_layer_sizes=(128,64,32,16),alpha=1e-5,random_state=1)
-    clf.fit(X_train,Y_train)
-    YPred=clf.predict(X_test)
+    mlp=MLPRegressor(hidden_layer_sizes=(20,), activation='logistic', solver='sgd', alpha=0.0001, 
+    learning_rate='adaptive', learning_rate_init=0.1, power_t=0.5, 
+    max_iter=5000,  random_state=1, tol=0.0001, verbose=False, warm_start=False, momentum=0.9)
+
+    mlp.fit(X_train,Y_train)
+    YPred=mlp.predict(X_test)
     err=(Y_test-YPred)/Y_test*100
     err=err.round(3)
     print(err)

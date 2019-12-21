@@ -5,10 +5,8 @@ import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
 
 def generateData():
-    import sys
-    sys.path.append('../')
     from module.ImageDigit import ImageDigit
-    img=Image.open('../data/digit/digit (1).jpg')
+    img=Image.open('data/digit/digit (1).jpg')
     imageDigit=ImageDigit(img)
     imageDigit.histShow()
     thresold=int(input("请输入闸值："))
@@ -45,8 +43,8 @@ def predict(clf,X_test,y_test,is_test):
 
 
 if __name__=='__main__':
-    # X,Y=generateData()
-    X,Y=getDigits()
+    X,Y=generateData()
+    # X,Y=getDigits()
     X_train, X_test, y_train, y_test=preprocessData(X,Y)
     clf=MLPClassifier(solver='lbfgs',hidden_layer_sizes=(64),alpha=1e-5,random_state=1,max_iter=8000)
     clf.fit(X_train,y_train)

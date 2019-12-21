@@ -32,6 +32,5 @@ def train():    #用minist数据集训练神经网络
 
 if __name__=='__main__':
     train()
-    print("Hello")
     
 
